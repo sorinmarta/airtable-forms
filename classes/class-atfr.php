@@ -7,13 +7,32 @@ if (!defined('ABSPATH')) {
     die('You are not allowed to call this page directly.');
 }
 
-class Atfr{
+class Atfr
+{
     static $table_name = 'atfr_forms';
 
     public function __construct()
     {
-        // Add the admin pages
-        add_action('admin_menu',array($this,'create_admin_pages'));
+        $this->loader();
+        add_action('admin_enqueue_scripts',array($this, 'enqueue'));
+    }
+
+    private function loader()
+    {
+        require_once(ATFR_PLUGIN . '/classes/class-atfr-settings.php');
+    }
+
+    public function enqueue()
+    {
+        // Styles
+        wp_enqueue_style('atfr-main-style','/wp-content/plugins/airtable-forms/assets/css/main.css',array(),null);
+
+        //Scripts
+        wp_register_script('atfr-main-script', '/wp-content/plugins/airtable-forms/assets/js/atfr-main-settings.js', array());
+        wp_localize_script('atfr-main-script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('atfr-main-script');
     }
 
     static function check_active_settings()
@@ -34,6 +53,11 @@ class Atfr{
         // Check if the airtable API Key option is enabled
         if (!get_option('atfr-api-key')) {
             add_option('atfr-api-key');
+        }
+
+        // Check if the airtable base option is enabled
+        if (!get_option('atfr-base')) {
+            add_option('atfr-base');
         }
 
         // Check if the airtable table option is enabled
@@ -60,36 +84,26 @@ class Atfr{
         }
     }
 
+    static function set_notice_data($message, $type)
+    {
+        $_SESSION['atfr-message'] = $message;
+        $_SESSION['atfr-type'] = $type;
+    }
+
+    static function determinate_notice_type($type)
+    {
+        # TODO: To add all the error types
+        switch ($type){
+            case 'success':
+                $class = 'notice-success';
+                break;
+            default:
+                $class = '';
+        }
+    }
+
     static function activate()
     {
         self::check_active_settings();
-    }
-
-    public function create_admin_pages(){
-        // Main Forms Page
-        add_menu_page(__('Airtable Forms',ATFR_DOMAIN),'Airtable Forms','manage_options','airtable-forms',array($this,'credentials_page_contents'),'dashicons-media-document');
-
-        // Settings sub-menu item
-        add_submenu_page('airtable-forms','Airtable Credentials','Credentials','manage_options','airtable-credentials',array($this,'forms_page_contents'));
-    }
-
-    public function forms_page_contents(){
-        ?>
-            <h1><?php esc_html_e('Airtable Credentials', ATFR_DOMAIN); ?></h1>
-        <?php
-    }
-
-    public function credentials_page_contents(){
-        ?>
-            <h1><?php esc_html_e('Airtable Forms', ATFR_DOMAIN); ?></h1>
-        <?php
-
-        if(empty(get_option('atfr-api-key'))){
-            ?>
-                <div class="atfr-credentials-notification">
-                    <h3>Please enter your Airtable API credentials <a href="/wp-admin/admin.php?page=airtable-credentials">here</a></h3>
-                </div>
-            <?php
-        }
     }
 }

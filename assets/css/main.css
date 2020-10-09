@@ -1,3 +1,60 @@
-.atfr-credentials-notification{
+.atfr-container{
+    max-width: 700px;
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(3, 186, 252,0.3);
+    padding:200px 50px;
+    margin-top: 30px;
+    border-radius: 20px;
+}
+
+#atfr-creds-form{
+    width: 80%;
+    display:flex;
+    flex-direction: column;
+}
+
+#atfr-creds-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+#atfr-creds-form input[type='text']{
+    display:block;
+    margin-top:5px;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+    padding:5px 20px;
+    border:0;
+}
+
+#atfr-creds-form input[type='submit']{
     margin-top:20px;
+    font-size:1.3em;
+    padding:0 10px;
+    background-color: rgba(245, 131, 10, 1);
+    min-height: 40px;
+    color: #fff;
+}
+
+.atfr-error-box{
+    padding: 0 10px;
+    border: 1px solid red;
+    margin-top:10px;
+    width: 80%;
+    display: none;
+}
+
+.atfr-error-box p{
+    font-weight: bold;
+    color:red;
+}
+
+.atfr-show{
+    display: block;
 }

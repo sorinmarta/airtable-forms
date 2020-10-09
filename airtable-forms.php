@@ -17,12 +17,14 @@
 // Dependencies
 use AirtableForms\Atfr;
 
-// Constant
+// Constants
 define('ATFR_FOLDER','airtable-forms');
 define('ATFR_PLUGIN', WP_PLUGIN_DIR.'/'.ATFR_FOLDER.'/');
 define('ATFR_CLASSES', ATFR_PLUGIN . 'classes/');
+define('ATFR_ASSETS', ATFR_PLUGIN . 'assets/');
 define('ATFR_VERSION', '1.0.0');
 define('ATFR_DOMAIN', 'airtable-forms');
+define('ATFR_CREDS_PAGE', admin_url('admin.php') . '?page=airtable-credentials');
 
 // Plugin Files
 require_once(ATFR_CLASSES . 'class-atfr.php');
@@ -41,7 +43,8 @@ new Atfr();
  *  [x] Create a table in the database that will store the value using a function and add it to the installation function
  *  [x] Create a dashboard page
  *  [x] Add the credentials submenu item
- *  [] Add fields to enter the Airtable required data for the API
+ *  [x] Add fields to enter the Airtable required data for the API
  *  [] Retrieve all the fields of the table and return them
  *  [] Output the fields with checkboxes
+ *  [] Create a shortcode for dynamic forms
  */
