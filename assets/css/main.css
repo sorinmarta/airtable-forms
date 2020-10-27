@@ -1,3 +1,13 @@
+@font-face{
+    font-family: 'ubuntu';
+    src: url('../fonts/Ubuntu-Regular.ttf');
+}
+
+.atfr-heading{
+    font-family: 'ubuntu';
+    /*letter-spacing: 2px;*/
+}
+
 .atfr-container{
     max-width: 700px;
     margin-left:auto;
@@ -21,6 +31,7 @@
     display: block;
     margin-top: 15px;
     font-weight: bold;
+    font-family: 'ubuntu';
 }
 
 #atfr-creds-form input[type='text']{
@@ -40,11 +51,12 @@
     background-color: rgba(245, 131, 10, 1);
     min-height: 40px;
     color: #fff;
+    cursor: pointer;
+    border: 0;
 }
 
 .atfr-error-box{
     padding: 0 10px;
-    border: 1px solid red;
     margin-top:10px;
     width: 80%;
     display: none;
@@ -52,9 +64,22 @@
 
 .atfr-error-box p{
     font-weight: bold;
-    color:red;
 }
 
 .atfr-show{
     display: block;
+}
+
+.atfr-notice-success{
+    color: green;
+    border: 2px solid green
+}
+
+.atfr-notice-error{
+    color: red;
+    border: 2px solid red
+}
+
+.atfr-field-error{
+    border: 1px solid red !important;
 }

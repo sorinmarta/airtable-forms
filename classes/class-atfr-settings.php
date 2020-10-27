@@ -32,13 +32,13 @@ class Atfr_Settings
 
     public function credentials_page_contents(){
         ?>
-        <h1><?php esc_html_e('Airtable Forms', ATFR_DOMAIN); ?></h1>
+        <h1 class="atfr-heading"><?php esc_html_e('Airtable Forms', ATFR_DOMAIN); ?></h1>
         <?php
 
         if(empty(get_option('atfr-api-key'))){
             ?>
             <div class="atfr-credentials-notification">
-                <h3>Please enter your Airtable API credentials <a href="/wp-admin/admin.php?page=airtable-credentials">here</a></h3>
+                <h3 class="atfr-heading">Please enter your Airtable API credentials <a href="/wp-admin/admin.php?page=airtable-credentials">here</a></h3>
             </div>
             <?php
         }
@@ -50,12 +50,8 @@ class Atfr_Settings
         if( isset( $_REQUEST['nonce'] ) && wp_verify_nonce( $_REQUEST['nonce'], 'atfr_add_creds_nonce') ) {
 
             $this->key      = $_REQUEST['atfr_key'];
-            $this->base     = $_REQUEST['atfr_base'];
-            $this->table    = $_REQUEST['atfr_table'];
 
             update_option('atfr-api-key', $this->key);
-            update_option('atfr-base', $this->base);
-            update_option('atfr-table', $this->table);
 
             $result['type'] = 'success';
             $result['message'] = __('Settings Saved Successfully!', ATFR_DOMAIN);
@@ -74,26 +70,6 @@ class Atfr_Settings
             $result['type'] = 'error';
             $result['field'] = 'ATKey';
             $result['message'] = __('Please fill the Key field', ATFR_DOMAIN);
-
-            $result = json_encode($result);
-            echo $result;
-            die();
-        }
-
-        if (empty($_REQUEST['atfr_base'])){
-            $result['type'] = 'error';
-            $result['field'] = 'ATBase';
-            $result['message'] = __('Please add the Base ID', ATFR_DOMAIN);
-
-            $result = json_encode($result);
-            echo $result;
-            die();
-        }
-
-        if (empty($_REQUEST['atfr_table'])){
-            $result['type'] = 'error';
-            $result['field'] = 'ATTable';
-            $result['message'] = __('Please add the Table ID', ATFR_DOMAIN);
 
             $result = json_encode($result);
             echo $result;
