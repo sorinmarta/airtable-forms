@@ -37,21 +37,22 @@ define('ATFR_ASSETS', ATFR_PLUGIN . 'assets/');
 define('ATFR_VERSION', '1.0.0');
 define('ATFR_DOMAIN', 'airtable-forms');
 define('ATFR_CREDS_PAGE', admin_url('admin.php') . '?page=airtable-credentials');
-
+define('ATFR_TABLE','atfr_forms');
 
 class Atfr
 {
-    static $table_name = 'atfr_forms';
+    static $table_name = ATFR_TABLE;
 
     public function __construct()
     {
         $this->loader();
         add_action('admin_enqueue_scripts',array($this, 'enqueue'));
-        register_activation_hook(ATFR_PLUGIN,array($this,'activate'));
+        register_activation_hook(__FILE__,array($this,'activate'));
     }
 
     private function loader()
     {
+        require_once(ATFR_PLUGIN . '/classes/traits/trait-atfr-database.php');
         require_once(ATFR_PLUGIN . '/classes/class-atfr-settings.php');
     }
 
@@ -94,8 +95,8 @@ class Atfr
                       name text NOT NULL,
                       description text NOT NULL,
                       fields text NOT NULL,
-                      table text NOT NULL,
-                      base text NOT NULL,
+                      at_table text NOT NULL,
+                      at_base text NOT NULL,
                       PRIMARY KEY  (id)
                     ) $charset_collate";
 
